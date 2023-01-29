@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
+import BotSpecs from './botSpecs';
 
 function BotCollection(props) {
   const [bots, setBots] = useState([]);
   const [selectedBot, setSelectedBot] = useState(null);
-
-
+  
   useEffect(() => {
-    fetch('')
+    fetch('https://api.npoint.io/52e04eaa96c92025acfa/bots/')
       .then(response => response.json())
       .then(data => setBots(data))
       .catch(error => console.error(error));
@@ -26,17 +25,36 @@ function BotCollection(props) {
     setSelectedBot(null);
   }
 
+  const handleDelete = bot => {
+    fetch(`https://api.npoint.io/3f9834e1240b04eb4361/bots/${bot.id}`, {
+      method: "DELETE"
+    })
+      .then(response => {
+        if (response.ok) {
+          setBots(bots.filter(b => b.id !== bot.id));
+        } else {
+          throw new Error("Failed to load bot.");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Failed to load bot.");
+      });
+  };
 
   return (
     <center className='body'>
       <div>
-            <h2 className='tittle'>Bot Battlr
-              <h6> add  your Army</h6>
+            <h2 className='tittle'>Bot Battlr App
+              <h6>clickon the bot to add to your Army</h6>
             </h2>
-          
-              
-              
-{
+            {selectedBot ? (
+              <BotSpecs
+                bot={selectedBot}
+                handleEnlist={handleEnlist}
+                handleBack={handleBack}
+              />
+            ) : (
               bots.map(bot => (
                 <div
                   className='bot-card'
@@ -58,7 +76,7 @@ function BotCollection(props) {
                     </div> 
                 </div>
                 
-            ))}
+            )))}
               
             
         </div>

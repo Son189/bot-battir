@@ -1,8 +1,7 @@
-
 import React from 'react';
 import './App.css'
-import BotCollection from './botCollection';
-import BotArmy from './BotArmy';
+import BotCollection from './Bot-colletion.js'
+import YourBotArmy from './YourBotArmy';
  
 
 
@@ -23,10 +22,10 @@ return(
    
   <div className='App'>
     <h2 className='header'>THE BOT COLLECTION  </h2>
-    <div className='top'>
-      <BotArmy yourArmy={yourArmy} removeBot={removeBot}/>
+   <div className='top'>
+      <YourBotArmy yourArmy={yourArmy} removeBot={removeBot}/>
       </div>
-      <div className='bottom'>
+       <div className='bottom'>
       <BotCollection addBot={addBot} yourArmy={yourArmy} />
       </div>
     </div>
